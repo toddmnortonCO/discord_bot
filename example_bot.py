@@ -2,6 +2,12 @@ import discord
 import os
 import requests # allows for HTTP request to get data from the API, zenquotes API
 import json # API returns JSON, this module makes it easier to work with the returned JSON
+from dotenv import load_dotenv, find_dotenv
+from pathlib import Path 
+
+load_dotenv(find_dotenv())
+env_path = Path('.')/'.env'
+load_dotenv(dotenv_path = env_path)
 
 client = discord.Client()
 sad_words = ["sad", "depressed", "unhappy", "angry", "miserable"]
