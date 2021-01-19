@@ -2,6 +2,8 @@ import discord
 import os
 import requests # allows for HTTP request to get data from the API, zenquotes API
 import json # API returns JSON, this module makes it easier to work with the returned JSON
+import random
+from keep_alive import keep_alive
 from dotenv import load_dotenv, find_dotenv
 from pathlib import Path 
 
@@ -14,7 +16,7 @@ sad_words = ["sad", "depressed", "unhappy", "angry", "miserable"]
 starter_encouragements = [
     "Cheer up!",
     "Hang in there!",
-    "You are a great person / bot!"
+    "You are a great person!" # great opportunity to add in username functionality
 ]
 
 def get_quote():
@@ -33,15 +35,17 @@ async def on_message(message):
         return
 
     msg = message.content
+    bot_reply = message.channel.send
 
     if msg.startswith('$hello'):
-        await message.channel.send('Hello!')
+        await bot_reply('Hello!')
 
     if msg.startswith('$inspire'):
         quote = get_quote()
-        await message.channel.send(quote)
+        await bot_reply(quote)
 
     if any(word in msg for word in sad_words):
-        await message.channel.send(random.choice(startswith))
+        await message.channel.send(random.choice(starter_encouragements))
 
+keep_alive()
 client.run(os.getenv('TOKEN'))
